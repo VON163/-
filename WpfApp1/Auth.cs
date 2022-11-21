@@ -14,10 +14,11 @@ namespace WpfApp1
         //создаем публичный метод 
         public string TestPassword(string password)
         {
+            string[] popularPasswords = File.ReadAllLines($"{Environment.CurrentDirectory}/passwords.txt");
             //Проверяем пароль на длину строки от 7 до 10 включительно
             if (password.Length >= 7 && password.Length <= 10)
             {
-                IEnumerable <string> pass = File.ReadLines(@"\C:Users\admin\Desktop\тренеровка\WpfApp1\pass.txt\", Encoding.UTF8);
+
                 //переменная для проверки цифры
                 bool IsDigit = false;
                 //переменная для проверки верхнего регистра
@@ -27,7 +28,7 @@ namespace WpfApp1
                 //переменная для проверки спецсимволов
                 bool IsSpec = false;
                 bool ThCheck = false;
-                bool NoPopular = false;
+
                 //цикл по всем символам пароля
                 foreach (var item in password)
                 {
@@ -55,14 +56,9 @@ namespace WpfApp1
                     for (int i = 0; i < password.Length - 1; i++)
                         if (password[i] == password[i + 1])
                         {
-                            ThCheck = false;
+                            ThCheck = true;
                         }
-                    //Проверка на популярность 
-
-                    if ("{pass}".Contains(item))
-                    {
-                      NoPopular = true; 
-                    }
+                }
                     //Проверяем переменную если истина то цифры есть
                     if (!IsDigit)
                     {
@@ -84,15 +80,14 @@ namespace WpfApp1
                     {
                         return "Пароль должен содержать спецсимволы!";
                     }
-                    if (!ThCheck)
+                    if (ThCheck)
                     {
                         return "Пароль не должен содержать рядом идущие повторяющиеся символы";
                     }
-                    if (!NoPopular)
+                    if (popularPasswords.Contains(password))
                     {
-                        return "Пароль слишком популярен! ";
+                        return "Невозможно использовать пароль т.к. он относиться к часто используемым!";
                     }
-
                     //возвращает (выходит) из метода с сообщением в квадратных ковычках
                     return "Пароль отличный!";
                 }
@@ -109,5 +104,9 @@ namespace WpfApp1
             }
         }
     }
-}
+
+
+
+
+
 
