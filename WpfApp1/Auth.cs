@@ -82,7 +82,7 @@ namespace WpfApp1
                     }
                     if (ThCheck)
                     {
-                        return "Пароль не должен содержать рядом идущие повторяющиеся символы";
+                        return "Пароль не должен содержать рядом идущие повторяющиеся символы!";
                     }
                     if (popularPasswords.Contains(password))
                     {
